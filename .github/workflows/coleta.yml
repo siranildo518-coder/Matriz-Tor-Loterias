@@ -19,7 +19,7 @@ jobs:
           p=json.load(open(os.environ['GITHUB_EVENT_PATH']))['client_payload']
           f=pathlib.Path('resultados.json')
           db=json.loads(f.read_text()) if f.exists() else {}
-          regras={'LF':(15,1,25),'MS':(6,1,60),'QN':(5,1,80),'LM':(20,0,99),'DI':(7,1,31),'DS1':(6,1,50),'DS2':(6,1,50)}
+          regras={'LF':(15,1,25),'MS':(6,1,60),'QN':(5,1,80),'LM':(20,0,99),'DI':(7,1,31)}
           for k,v in p.items():
               if k not in regras: continue
               n,a,b=regras[k]
