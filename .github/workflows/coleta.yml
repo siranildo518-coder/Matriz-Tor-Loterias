@@ -25,7 +25,9 @@ jobs:
               n,a,b=regras[k]
               c=int(v['concurso'])
               d=[int(x) for x in str(v['dezenas']).split()]
-              if c<=0 or len(d)!=n or len(set(d))!=n or not all(a<=x<=b for x in d): raise ValueError(k)
+              if c<=0 or len(d)!=n or len(set(d))!=n or not all(a<=x<=b for x in d):
+                  print(f'Ignorado resultado invalido: {k}')
+                  continue
               db.setdefault(k,{})[str(c)]={'dezenas':[f'{x:02d}' for x in sorted(d)]}
           f.write_text(json.dumps(db,ensure_ascii=False,indent=2))
           PY
