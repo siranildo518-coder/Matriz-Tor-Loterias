@@ -23,8 +23,12 @@ jobs:
           for k,v in p.items():
               if k not in regras: continue
               n,a,b=regras[k]
-              c=int(v['concurso'])
-              d=[int(x) for x in str(v['dezenas']).split()]
+              try:
+                  c=int(v['concurso'])
+                  d=[int(x) for x in str(v['dezenas']).split()]
+              except (ValueError, TypeError, KeyError):
+                  print(f'Ignorado campo vazio ou invalido: {k}')
+                  continue
               if c<=0 or len(d)!=n or len(set(d))!=n or not all(a<=x<=b for x in d):
                   print(f'Ignorado resultado invalido: {k}')
                   continue
