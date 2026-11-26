@@ -32,7 +32,13 @@ jobs:
               if c<=0 or len(d)!=n or len(set(d))!=n or not all(a<=x<=b for x in d):
                   print(f'Ignorado resultado invalido: {k}')
                   continue
-              db.setdefault(k,{})[str(c)]={'dezenas':[f'{x:02d}' for x in sorted(d)]}
+              historico=db.setdefault(k,{})
+              novo={'dezenas':[f'{x:02d}' for x in sorted(d)]}
+              if str(c) in historico:
+                  if historico[str(c)] != novo:
+                      print(f'Conflito bloqueado: {k} concurso {c}')
+                  continue
+              historico[str(c)]=novo
           f.write_text(json.dumps(db,ensure_ascii=False,indent=2))
           PY
           git config user.name github-actions
